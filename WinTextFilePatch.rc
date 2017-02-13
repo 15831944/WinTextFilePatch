@@ -1,0 +1,228 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// French (France) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
+#ifdef _WIN32
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 12, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\WinTextFilePatch.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.fra\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\WinTextFilePatch.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_WINTEXTFILEPATCH_DIALOG DIALOGEX 0, 0, 312, 391
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "WinTextFilePatch 1.00 - English version"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Source",IDC_STATIC,8,16,24,8
+    EDITTEXT        IDC_ED_FILE_SRC,48,16,232,14,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    PUSHBUTTON      "...",IDC_BUT_FILE_SRC,284,16,15,14
+    LTEXT           "Extension",IDC_STATIC,8,32,32,8
+    EDITTEXT        IDC_ED_FILE_TYPE,48,32,252,14,ES_AUTOHSCROLL
+    LTEXT           "Destination",IDC_STATIC,8,48,36,8
+    EDITTEXT        IDC_ED_FILE_DST,48,48,232,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BUT_FILE_DST,284,48,15,14
+    LTEXT           "Start",IDC_STATIC,8,84,16,8
+    EDITTEXT        IDC_ED_TXT_START,48,84,252,14,ES_AUTOHSCROLL
+    LTEXT           "Body = %+",IDC_STATIC,8,100,34,8
+    EDITTEXT        IDC_ED_TXT_BODY,48,100,252,14,ES_AUTOHSCROLL
+    LTEXT           "End",IDC_STATIC,8,116,14,8
+    EDITTEXT        IDC_ED_TXT_END,48,116,252,14,ES_AUTOHSCROLL
+    LTEXT           "Replace",IDC_STATIC,8,136,28,8
+    EDITTEXT        IDC_ED_TXT_RMP,48,136,252,14,ES_AUTOHSCROLL
+    CONTROL         "Include unprocessed text",IDC_CHK_TXT_INC,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,48,152,95,10
+    CONTROL         "Add end of line",IDC_CHK_TXT_CRLF,"Button",
+                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,224,152,63,10
+    LTEXT           "Header",IDC_STATIC,8,220,24,8
+    EDITTEXT        IDC_ED_ENC_START,48,220,220,40,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN | 
+                    WS_VSCROLL
+    LTEXT           "Tail",IDC_STATIC,8,265,12,8
+    EDITTEXT        IDC_ED_ENC_END,48,264,220,40,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN | 
+                    WS_VSCROLL
+    LTEXT           "Example",IDC_STATIC,8,164,28,8
+    EDITTEXT        IDC_ED_TXT_EX,48,164,252,32,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | 
+                    WS_VSCROLL
+    GROUPBOX        "File",IDC_STATIC,4,4,304,64
+    GROUPBOX        "Text",IDC_STATIC,4,72,304,132
+    GROUPBOX        "Encapsulation",IDC_STATIC,4,208,304,104
+    GROUPBOX        "Process",IDC_STATIC,4,316,304,68
+    LTEXT           "File",IDC_STATIC,8,328,12,8
+    LTEXT           "",IDC_STA_WRK_FILE_TXT,48,324,164,16
+    LTEXT           "",IDC_STA_WRK_FILE_PROG,216,324,84,16,0,
+                    WS_EX_STATICEDGE
+    LTEXT           "Total",IDC_STATIC,8,344,17,8
+    LTEXT           "",IDC_STA_WRK_TOT_TXT,48,344,252,12
+    LTEXT           "",IDC_STA_WRK_TOT_PROG,48,360,232,16,0,WS_EX_STATICEDGE
+    PUSHBUTTON      "!!!",IDC_BUT_WRK_RUN,284,360,16,14
+    PUSHBUTTON      "HTML",IDC_BUT_ENC_START_HTML,272,220,28,14
+    PUSHBUTTON      "CPP",IDC_BUT_ENC_START_CPP,272,244,28,14
+    PUSHBUTTON      "HTML",IDC_BUT_ENC_END_HTML,272,264,28,14
+    PUSHBUTTON      "CPP",IDC_BUT_ENC_END_CPP,272,288,28,14
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040C04B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "Application MFC WinTextFilePatch\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "WinTextFilePatch\0"
+            VALUE "LegalCopyright", "Copyright (C) 2004\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "WinTextFilePatch.EXE\0"
+            VALUE "ProductName", "Application WinTextFilePatch\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x40c, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_WINTEXTFILEPATCH_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 305
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 384
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// 24
+//
+
+1                       24      DISCARDABLE     "res\\xptheme.bin"
+#endif    // French (France) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
+#ifdef _WIN32
+LANGUAGE 12, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\WinTextFilePatch.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.fra\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
