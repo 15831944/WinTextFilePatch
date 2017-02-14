@@ -41,24 +41,20 @@ CWinTextFilePatchApp theApp;
 
 BOOL CWinTextFilePatchApp::InitInstance()
 {
-	// Standard initialization
-	// If you are not using these features and wish to reduce the size
-	//  of your final executable, you should remove from the following
-	//  the specific initialization routines you do not need.
+	SetRegistryKey(_T("Kochise"));
+	LoadStdProfileSettings();  // Load standard INI file options (including MRU)
 
 	CWinTextFilePatchDlg dlg;
 	m_pMainWnd = &dlg;
-	int nResponse = dlg.DoModal();
-	if (nResponse == IDOK)
+	
+  int nResponse = dlg.DoModal();
+
+	if(nResponse == IDOK)
 	{
-		// TODO: Place code here to handle when the dialog is
-		//  dismissed with OK
 	}
-	else if (nResponse == IDCANCEL)
+	else if(nResponse == IDCANCEL)
 	{
-		// TODO: Place code here to handle when the dialog is
-		//  dismissed with Cancel
-	}
+	}else{}
 
 	// Since the dialog has been closed, return FALSE so that we exit the
 	//  application, rather than start the application's message pump.

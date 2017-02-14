@@ -76,7 +76,7 @@ IDR_MAINFRAME           ICON    DISCARDABLE     "res\\WinTextFilePatch.ico"
 IDD_WINTEXTFILEPATCH_DIALOG DIALOGEX 0, 0, 312, 391
 STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "WinTextFilePatch 1.00 - English version"
+CAPTION "WinTextFilePatch 1.02 - English version"
 FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "Source",IDC_STATIC,8,16,24,8
@@ -138,8 +138,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,1
- PRODUCTVERSION 1,0,0,1
+ FILEVERSION 1,0,2,0
+ PRODUCTVERSION 1,0,2,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -152,17 +152,20 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "040C04B0"
+        BLOCK "040c04b0"
         BEGIN
+            VALUE "Comments", "\0"
             VALUE "CompanyName", "\0"
             VALUE "FileDescription", "Application MFC WinTextFilePatch\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "FileVersion", "1, 0, 2, 0\0"
             VALUE "InternalName", "WinTextFilePatch\0"
             VALUE "LegalCopyright", "Copyright (C) 2004\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "WinTextFilePatch.EXE\0"
+            VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "Application WinTextFilePatch\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "ProductVersion", "1, 0, 2, 0\0"
+            VALUE "SpecialBuild", "\0"
         END
     END
     BLOCK "VarFileInfo"

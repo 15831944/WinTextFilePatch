@@ -157,7 +157,7 @@ public:
   CButton  m_oButEncEndHtml;
   CButton  m_oButEncEndCpp;
   BOOL  m_bChkTxtCrlf;
-  BOOL  m_oChkTxtInclude;
+  BOOL  m_bChkTxtInclude;
   CString  m_oStrEncEnd;
   CString  m_oStrEncStart;
   CString  m_oStrFileDst;
@@ -172,13 +172,15 @@ public:
 
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CWinTextFilePatchDlg)
-  protected:
+	protected:
   virtual void DoDataExchange(CDataExchange* pDX);  // DDX/DDV support
-  //}}AFX_VIRTUAL
+	//}}AFX_VIRTUAL
 
   void VerifyText(void);
   void VerifyRun(void);
   void VerifyDst(void);
+
+  void SaveParams(void);
 
 // Implementation
 protected:
@@ -206,6 +208,7 @@ protected:
   afx_msg void OnChangeEdTxtEnd();
   afx_msg void OnChangeEdTxtRmp();
 	afx_msg void OnChangeEdFileDst();
+	afx_msg void OnDestroy();
 	//}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 };

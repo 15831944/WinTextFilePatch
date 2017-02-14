@@ -8,6 +8,7 @@
 #include "SkinProgress.h"
 #include "PathDialog.h"
 #include "CPathSplit.h"
+#include "amsWnd.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -23,7 +24,7 @@ CWinTextFilePatchDlg::CWinTextFilePatchDlg(CWnd* pParent /*=NULL*/)
 {
   //{{AFX_DATA_INIT(CWinTextFilePatchDlg)
   m_bChkTxtCrlf = FALSE;
-  m_oChkTxtInclude = FALSE;
+  m_bChkTxtInclude = FALSE;
   m_oStrEncEnd = _T("");
   m_oStrEncStart = _T("");
   m_oStrFileDst = _T("");
@@ -57,7 +58,7 @@ void CWinTextFilePatchDlg::DoDataExchange(CDataExchange* pDX)
   DDX_Control(pDX, IDC_BUT_ENC_END_HTML, m_oButEncEndHtml);
   DDX_Control(pDX, IDC_BUT_ENC_END_CPP, m_oButEncEndCpp);
   DDX_Check(pDX, IDC_CHK_TXT_CRLF, m_bChkTxtCrlf);
-  DDX_Check(pDX, IDC_CHK_TXT_INC, m_oChkTxtInclude);
+  DDX_Check(pDX, IDC_CHK_TXT_INC, m_bChkTxtInclude);
   DDX_Text(pDX, IDC_ED_ENC_END, m_oStrEncEnd);
   DDX_Text(pDX, IDC_ED_ENC_START, m_oStrEncStart);
   DDX_Text(pDX, IDC_ED_FILE_DST, m_oStrFileDst);
@@ -87,6 +88,7 @@ BEGIN_MESSAGE_MAP(CWinTextFilePatchDlg, CDialog)
   ON_EN_CHANGE(IDC_ED_TXT_END, OnChangeEdTxtEnd)
   ON_EN_CHANGE(IDC_ED_TXT_RMP, OnChangeEdTxtRmp)
 	ON_EN_CHANGE(IDC_ED_FILE_DST, OnChangeEdFileDst)
+	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -96,6 +98,8 @@ END_MESSAGE_MAP()
 BOOL CWinTextFilePatchDlg::OnInitDialog()
 {
   CDialog::OnInitDialog();
+
+  CAMSWnd::Restore(this, _T("DlgTextPath"), CAMSWnd::Position);
 
   // Set the icon for this dialog.  The framework does this automatically
   //  when the application's main window is not a dialog
@@ -111,29 +115,31 @@ BOOL CWinTextFilePatchDlg::OnInitDialog()
   m_oEditTxtRmp.SetBkColor(RGB(255, 255, 255));
   
   m_bTestDestination = FALSE;
-  m_bTestFile = FALSE;
-  m_bTestReplace = FALSE;
+  m_bTestFile        = FALSE;
+  m_bTestReplace     = FALSE;
 
   m_oStrAppPath = AfxGetApp()->m_pszHelpFilePath;
   m_oStrAppPath = m_oStrAppPath.Left(m_oStrAppPath.ReverseFind('\\')+1);
 
-  m_oStrFileSrc  = m_oStrAppPath;
-  m_oStrFileType = "htm;html";
-  m_oStrFileDst  = m_oStrAppPath+"concate.htm";
+  m_oStrFileSrc  = AfxGetApp()->GetProfileString(_T("File"), _T("Src"),  m_oStrAppPath);
+  m_oStrFileType = AfxGetApp()->GetProfileString(_T("File"), _T("Type"), _T("htm;html"));
+  m_oStrFileDst  = AfxGetApp()->GetProfileString(_T("File"), _T("Dst"),  m_oStrAppPath+"concate.htm");
 
-  m_bChkTxtCrlf = TRUE;
+  m_bChkTxtCrlf    = AfxGetApp()->GetProfileInt(_T("Text"), _T("Crlf"),    TRUE);
+  m_bChkTxtInclude = AfxGetApp()->GetProfileInt(_T("Text"), _T("Include"), FALSE);
 
-  m_oStrTxtStart = "URL=";
-  m_oStrTxtBody  = "body";
-  m_oStrTxtEnd   = ">Click me !</";
-  m_oStrTxtRmp   = "<a href=\"%body\">%body</a><br>";
+  m_oStrTxtStart = AfxGetApp()->GetProfileString(_T("Text"), _T("Start"), _T("URL="));
+  m_oStrTxtBody  = AfxGetApp()->GetProfileString(_T("Text"), _T("Body"),  _T("body"));
+  m_oStrTxtEnd   = AfxGetApp()->GetProfileString(_T("Text"), _T("End"),   _T(">Click me !</"));
+  m_oStrTxtRmp   = AfxGetApp()->GetProfileString(_T("Text"), _T("Rmp"),   _T("<a href=\"%body\">%body</a><br>"));
 
   UpdateData(FALSE); // Put first data set into GUI
 
   VerifyDst();
 
-  OnButEncStartHtml();
-  OnButEncEndHtml();
+  m_oStrEncStart = AfxGetApp()->GetProfileString(_T("Encaps"), _T("Start"), _T("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\r\n  <html>\r\n    <head>\r\n      <title>\r\n        Titre\r\n      </title>\r\n    </head>\r\n  <body>\r\n"));
+  m_oStrEncEnd   = AfxGetApp()->GetProfileString(_T("Encaps"), _T("End"),   _T("  </body>\r\n</html>\r\n"));
+  UpdateData(FALSE);
 
   VerifyText();
 
@@ -190,7 +196,7 @@ void CWinTextFilePatchDlg::OnButFileSrc()
   if(PathSelect.DoModal() == IDOK)
   { // If OK
     m_oStrFileSrc = PathSelect.GetPathName() + "\\"; // Get selected directory
-    m_oStrFileSrc.Replace("\\\\", "\\");
+    while(m_oStrFileSrc.Replace("\\\\", "\\"));
 
     // If destination directory empty, use source directory
     if(m_oStrFileDst.IsEmpty())
@@ -220,7 +226,7 @@ void CWinTextFilePatchDlg::OnButFileDst()
   if(PathSelect.DoModal() == IDOK)
   { // If OK
     m_oStrFileDst = PathSelect.GetPathName() + "\\"; // Get selected directory
-    m_oStrFileDst.Replace("\\\\", "\\");
+    while(m_oStrFileDst.Replace("\\\\", "\\"));
 
     // If source directory empty, use destination directory
     if(m_oStrFileSrc.IsEmpty())
@@ -298,7 +304,7 @@ void CWinTextFilePatchDlg::OnButWrkRun()
 
   //
 
-  UpdateData(TRUE);
+  SaveParams();
 
   m_oButFileSrc.EnableWindow(FALSE);
   m_oButFileDst.EnableWindow(FALSE);
@@ -338,7 +344,7 @@ void CWinTextFilePatchDlg::OnButWrkRun()
     }
 
     l_oStrDataTempo = m_oStrFileSrc+"\\*."+l_oStrDataTempo;
-    while(l_oStrDataTempo.Replace("\\\\", "\\") != 0); // Erase double slash
+    while(l_oStrDataTempo.Replace("\\\\", "\\")); // Erase double slash
 
     l_hFile = FindFirstFile(l_oStrDataTempo, &l_hFileFind);
     do
@@ -350,7 +356,7 @@ void CWinTextFilePatchDlg::OnButWrkRun()
       )
       {
         l_oStrDataTempo = m_oStrFileSrc+"\\"+l_hFileFind.cFileName;
-        while(l_oStrDataTempo.Replace("\\\\", "\\") != 0); // Erase double slash
+        while(l_oStrDataTempo.Replace("\\\\", "\\")); // Erase double slash
         l_oStrFileList.AddDicho(l_oStrDataTempo);
       }else{}
     }
@@ -473,7 +479,7 @@ void CWinTextFilePatchDlg::OnButWrkRun()
           l_nPointer = l_oStrDataIn.Find(m_oStrTxtStart, l_nPointerStart);
           if(l_nPointer < 0)
           { // I not found anything else
-            if(m_oChkTxtInclude == TRUE)
+            if(m_bChkTxtInclude == TRUE)
             {
               l_oStrDataOut += l_oStrDataIn.Mid(l_nPointerStart);
             }else{}
@@ -481,7 +487,7 @@ void CWinTextFilePatchDlg::OnButWrkRun()
           }
           else
           { // I found the start
-            if(m_oChkTxtInclude == TRUE)
+            if(m_bChkTxtInclude == TRUE)
             {
               l_oStrDataOut += l_oStrDataIn.Mid(l_nPointerStart, l_nPointer-l_nPointerStart);
             }else{}
@@ -491,7 +497,7 @@ void CWinTextFilePatchDlg::OnButWrkRun()
             l_nPointerSize = l_oStrDataIn.Find(m_oStrTxtEnd, l_nPointer);
             if(l_nPointerSize < 0)
             { // I not found anything else
-              if(m_oChkTxtInclude == TRUE)
+              if(m_bChkTxtInclude == TRUE)
               {
                 l_oStrDataOut += l_oStrDataIn.Mid(l_nPointer);
               }else{}
@@ -598,6 +604,8 @@ void CWinTextFilePatchDlg::OnChangeEdTxtRmp()
   VerifyText();
 }
 
+#define FORCE_REPLACE
+
 void CWinTextFilePatchDlg::VerifyText(void)
 {
   CString l_oStrTempo;
@@ -613,6 +621,28 @@ void CWinTextFilePatchDlg::VerifyText(void)
   l_oStrReplace = "%"+m_oStrTxtBody;
   l_nPos = m_oStrTxtRmp.Find(l_oStrReplace);
 
+#ifdef FORCE_REPLACE
+  m_bTestReplace = TRUE;
+  m_oStrTxtEx = "Replace : " + m_oStrTxtStart + l_oStrTempo + m_oStrTxtEnd + "\r\nWith : " + m_oStrTxtRmp;
+  m_oStrTxtEx.Replace(l_oStrReplace, l_oStrTempo);
+
+  if
+  (
+       (m_oStrTxtRmp.IsEmpty() == TRUE)
+    || (
+       
+            (m_oStrTxtRmp.IsEmpty() == FALSE)
+         && (l_nPos >= 0)
+       )
+  )
+  {
+    m_oEditTxtRmp.SetBkColor(RGB(255, 255, 255));
+  }
+  else
+  {
+    m_oEditTxtRmp.SetBkColor(RGB(255, 191, 191));
+  }
+#else
   if
   (
        (m_oStrTxtRmp.IsEmpty() == TRUE)
@@ -635,6 +665,7 @@ void CWinTextFilePatchDlg::VerifyText(void)
     m_oEditTxtRmp.SetBkColor(RGB(255, 191, 191));
     m_bTestReplace = FALSE;
   }
+#endif // FORCE_REPLACE
 
   VerifyRun();
 }
@@ -709,9 +740,38 @@ void CWinTextFilePatchDlg::VerifyDst(void)
   }
 }
 
+void CWinTextFilePatchDlg::SaveParams(void)
+{
+  UpdateData(TRUE);
+
+  AfxGetApp()->WriteProfileString(_T("File"), _T("Src"),  m_oStrFileSrc);
+  AfxGetApp()->WriteProfileString(_T("File"), _T("Type"), m_oStrFileType);
+  AfxGetApp()->WriteProfileString(_T("File"), _T("Dst"),  m_oStrFileDst);
+
+  AfxGetApp()->WriteProfileInt(_T("Text"), _T("Crlf"),    m_bChkTxtCrlf);
+  AfxGetApp()->WriteProfileInt(_T("Text"), _T("Include"), m_bChkTxtInclude);
+
+  AfxGetApp()->WriteProfileString(_T("Text"), _T("Start"), m_oStrTxtStart);
+  AfxGetApp()->WriteProfileString(_T("Text"), _T("Body"),  m_oStrTxtBody);
+  AfxGetApp()->WriteProfileString(_T("Text"), _T("End"),   m_oStrTxtEnd);
+  AfxGetApp()->WriteProfileString(_T("Text"), _T("Rmp"),   m_oStrTxtRmp);
+
+  AfxGetApp()->WriteProfileString(_T("Encaps"), _T("Start"), m_oStrEncStart);
+  AfxGetApp()->WriteProfileString(_T("Encaps"), _T("End"),   m_oStrEncEnd);
+}
+
 void CWinTextFilePatchDlg::OnChangeEdFileDst() 
 {
   VerifyDst();
 
   UpdateData(FALSE);
+}
+
+void CWinTextFilePatchDlg::OnDestroy() 
+{
+	SaveParams();
+
+  CAMSWnd::Save(this, _T("DlgTextPath"));
+
+	CDialog::OnDestroy();
 }
