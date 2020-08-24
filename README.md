@@ -2,6 +2,8 @@
 
 Windows MFC program to extract and concatenate text from files
 
+![WinTextFilePatch](https://raw.githubusercontent.com/Kochise/WinTextFilePatch/master/WinTextFilePatch.png)
+
 * Hardware and software needed
 
 You need the following to get this program working :
